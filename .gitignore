@@ -9,6 +9,7 @@ venv/
 dbt/target/
 dbt/dbt_packages/
 dbt/logs/
+.venv-dbt/
 
 # Power BI
 power_bi/*.pbix
@@ -16,3 +17,5 @@ power_bi/*.pbix
 # OS
 .DS_Store
 Thumbs.db
+
+logs/
