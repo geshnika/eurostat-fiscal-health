@@ -1,0 +1,26 @@
+CountryCode,ISO3,CountryName,Capital,Region,RegionCode,Currency,EUMember,EuroZone,SchengenEntryYear,Population2023
+AT,AUT,Austria,Vienna,Central Europe,CEN,EUR,1,1,1997,9104772
+BE,BEL,Belgium,Brussels,Western Europe,WES,EUR,1,1,1995,11686140
+CH,CHE,Switzerland,Bern,Central Europe,CEN,CHF,0,0,2008,8796669
+CZ,CZE,Czechia,Prague,Central Europe,CEN,CZK,1,0,2007,10900555
+DE,DEU,Germany,Berlin,Central Europe,CEN,EUR,1,1,1995,84607016
+DK,DNK,Denmark,Copenhagen,Northern Europe,NOR,DKK,1,0,2001,5932654
+EE,EST,Estonia,Tallinn,Northern Europe,NOR,EUR,1,1,2007,1374687
+EL,GRC,Greece,Athens,Southern Europe,SOU,EUR,1,1,2000,10394055
+ES,ESP,Spain,Madrid,Southern Europe,SOU,EUR,1,1,1995,47415750
+FI,FIN,Finland,Helsinki,Northern Europe,NOR,EUR,1,1,2001,5545475
+FR,FRA,France,Paris,Western Europe,WES,EUR,1,1,1995,68042591
+HU,HUN,Hungary,Budapest,Central Europe,CEN,HUF,1,0,2007,9597085
+IS,ISL,Iceland,Reykjavik,Northern Europe,NOR,ISK,0,0,2001,376248
+IT,ITA,Italy,Rome,Southern Europe,SOU,EUR,1,1,1997,58850717
+LT,LTU,Lithuania,Vilnius,Northern Europe,NOR,EUR,1,1,2007,2718352
+LU,LUX,Luxembourg,Luxembourg City,Western Europe,WES,EUR,1,1,1995,660809
+LV,LVA,Latvia,Riga,Northern Europe,NOR,EUR,1,1,2007,1830211
+MT,MLT,Malta,Valletta,Southern Europe,SOU,EUR,1,1,2007,535064
+NL,NLD,Netherlands,Amsterdam,Western Europe,WES,EUR,1,1,1995,17890000
+NO,NOR,Norway,Oslo,Northern Europe,NOR,NOK,0,0,2001,5488984
+PL,POL,Poland,Warsaw,Central Europe,CEN,PLN,1,0,2007,36753736
+PT,PRT,Portugal,Lisbon,Southern Europe,SOU,EUR,1,1,1995,10247605
+SE,SWE,Sweden,Stockholm,Northern Europe,NOR,SEK,1,0,2001,10612086
+SI,SVN,Slovenia,Ljubljana,Central Europe,CEN,EUR,1,1,2007,2119675
+SK,SVK,Slovakia,Bratislava,Central Europe,CEN,EUR,1,1,2007,5795199
