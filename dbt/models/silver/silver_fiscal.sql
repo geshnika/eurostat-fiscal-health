@@ -16,6 +16,7 @@ SELECT
         ELSE CF.CofogName
      END AS Indicator
     ,CAST(B.value AS FLOAT) AS Value
+	,'% of GDP' AS Unit
 
 FROM {{ source('bronze', 'bronze_raw') }} AS B
 

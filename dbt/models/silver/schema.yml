@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: silver_fiscal
+    description: "Fiscal indicators - government debt, deficit and expenditure by COFOG category"
+    columns:
+      - name: CountryCode
+        description: "ISO 2-letter country code (Eurostat)"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_country')
+              field: CountryCode
+      - name: Year
+        description: "Reference year"
+        tests:
+          - not_null
+      - name: Indicator
+        description: "Fiscal indicator name"
+        tests:
+          - not_null
+      - name: Value
+        description: "Indicator value as % of GDP"
+        tests:
+          - not_null
+      - name: Unit
+        description: "Unit of measurement"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['% of GDP']
+
+  - name: silver_monetary
+    description: "Monetary indicators - inflation HICP and long-term interest rates"
+    columns:
+      - name: CountryCode
+        description: "ISO 2-letter country code (Eurostat)"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_country')
+              field: CountryCode
+      - name: Year
+        description: "Reference year"
+        tests:
+          - not_null
+      - name: Indicator
+        description: "Monetary indicator name"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Inflation (HICP)', 'Long-term Interest Rate']
+      - name: Value
+        description: "Indicator value"
+        tests:
+          - not_null
+      - name: Unit
+        description: "Unit of measurement"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Annual % change', 'Annual %']
+
+  - name: silver_labor
+    description: "Labor market indicators - unemployment rate by sex"
+    columns:
+      - name: CountryCode
+        description: "ISO 2-letter country code (Eurostat)"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_country')
+              field: CountryCode
+      - name: Year
+        description: "Reference year"
+        tests:
+          - not_null
+      - name: Sex
+        description: "Sex of the population group"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Male', 'Female']
+      - name: Value
+        description: "Unemployment rate as % of active population"
+        tests:
+          - not_null
+      - name: Unit
+        description: "Unit of measurement"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['% of active population']
