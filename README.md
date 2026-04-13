@@ -32,7 +32,7 @@ This project tracks 13 macroeconomic indicators across 25 Schengen countries fro
 ## Architecture
 
 ```
-Bronze (Python)         eurostat.bronze_raw         Raw data from Eurostat API
+Bronze (Python)         eurostat.bronze_raw          Raw data from Eurostat API
 Seeds  (dbt)            eurostat.dim_country         25 Schengen countries with metadata
                         eurostat.dim_date            Years 2000–2025 with historical context
                         eurostat.dim_cofog           COFOG classification of government expenditure
