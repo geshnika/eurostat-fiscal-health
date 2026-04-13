@@ -1,0 +1,8 @@
+CofogCode,CofogName,CofogDescription,IsTotal
+TOTAL,Total Expenditure,"Aggregate of all government expenditure functions",1
+GF02,Defence,"Military defence, civil defence, and foreign military aid",0
+GF04,Economic Affairs,"Support to business, infrastructure, energy, agriculture, and R&D",0
+GF06,Housing,"Housing development, community amenities, and water supply",0
+GF07,Health,"Medical products, outpatient and hospital services, and public health",0
+GF09,Education,"Pre-primary through tertiary education, and ancillary services",0
+GF10,Social Protection,"Sickness, disability, old age, family, unemployment, and social exclusion",0
