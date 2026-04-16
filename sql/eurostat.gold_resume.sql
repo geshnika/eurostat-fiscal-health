@@ -96,7 +96,7 @@ SELECT
 
 FROM eurostat.dim_country AS C
 
-LEFT JOIN Inflation AS Inf ON Inf. CountryCode = C.CountryCode
-LEFT JOIN Interest AS Int ON Int. CountryCode = C.CountryCode
+LEFT JOIN Inflation AS Inf ON Inf.CountryCode = C.CountryCode
+LEFT JOIN Interest AS Int ON Int.CountryCode = C.CountryCode
 LEFT JOIN Fiscal AS F ON F.CountryCode = C.CountryCode
 LEFT JOIN Labor AS L ON L.CountryCode = C.CountryCode

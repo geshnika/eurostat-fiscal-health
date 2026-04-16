@@ -1,0 +1,55 @@
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+--														 CTE: Inicio														  --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+WITH
+  Inflation AS ( -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - - silver_monetary: Best, worst & last year <<<
+	SELECT
+		 CountryName
+		,Year
+		,Decade
+		,Indicator
+		,Value
+		,ROW_NUMBER() OVER (PARTITION BY CountryName ORDER BY Value ASC) AS BestYear
+		,ROW_NUMBER() OVER (PARTITION BY CountryName ORDER BY Value DESC) AS WorstYear
+		,ROW_NUMBER() OVER (PARTITION BY CountryName ORDER BY Year DESC) AS LastYear
+	FROM eurostat.silver_monetary
+	WHERE Indicator = 'Inflation (HICP)'
+),
+
+  CumulativeInflation AS ( -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - Cumulative inflation for the decade <<<
+	SELECT
+		 CountryName
+		,Decade
+		,ROUND((EXP(SUM(LOG(1 + Value/100))) - 1) * 100, 2) AS CumulativeInflation
+	FROM Inflation
+	GROUP BY
+		 CountryName
+		,Decade
+)
+
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+--														  CTE: Fin														      --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
+SELECT 
+	 I.CountryName AS Country
+
+	,ROUND(AVG(IIF(I.Decade = '2000', Value, NULL)), 2) AS Avg2000
+	,MAX(IIF(Ci.Decade = '2000', CumulativeInflation, NULL)) AS Cumulative2000
+	,ROUND(AVG(IIF(I.Decade = '2010', Value, NULL)), 2) AS Avg2010
+	,MAX(IIF(Ci.Decade = '2010', CumulativeInflation, NULL)) AS Cumulative2010
+	,ROUND(AVG(IIF(I.Decade = '2020', Value, NULL)), 2) AS Avg2020
+	,MAX(IIF(Ci.Decade = '2020', CumulativeInflation, NULL)) AS Cumulative2020
+
+	,MAX(IIF(I.LastYear = 1, Value, NULL)) AS LastYear
+
+	,MAX(IIF(I.BestYear = 1, Year, NULL)) AS [LowestYear]
+	,MAX(IIF(I.BestYear = 1, ROUND(Value, 2), NULL)) AS [LowestValue]
+	,MAX(IIF(I.WorstYear = 1, Year, NULL)) AS [HighestYear]
+	,MAX(IIF(I.WorstYear = 1, ROUND(Value, 2), NULL)) AS [HighestValue]
+
+FROM Inflation AS I
+LEFT JOIN CumulativeInflation AS Ci ON Ci.CountryName = I.CountryName
+
+GROUP BY I.CountryName
