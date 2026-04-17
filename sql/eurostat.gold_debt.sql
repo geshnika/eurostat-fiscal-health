@@ -1,10 +1,11 @@
 SELECT 
 	 CountryName AS Country
-	,ROUND(AVG(IIF(Decade = '2000', Value, NULL)), 2) AS Avg2000
-	,ROUND(AVG(IIF(Decade = '2010', Value, NULL)), 2) AS Avg2010
-	,ROUND(AVG(IIF(Decade = '2020', Value, NULL)), 2) AS Avg2020
 
 	,MAX(IIF(LastYear = 1, Value, NULL)) AS LastYear
+
+	,ROUND(AVG(IIF(Decade = '2000', Value, NULL)), 2) AS Avg2000s
+	,ROUND(AVG(IIF(Decade = '2010', Value, NULL)), 2) AS Avg2010s
+	,ROUND(AVG(IIF(Decade = '2020', Value, NULL)), 2) AS Avg2020s
 
 	,MAX(IIF(BestYear = 1, Year, NULL)) AS [LowesYear]
 	,MAX(IIF(BestYear = 1, ROUND(Value, 2), NULL)) AS [LowestValue]
