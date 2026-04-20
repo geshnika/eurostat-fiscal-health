@@ -90,28 +90,28 @@ Social protection remains the largest spending category across the region, rangi
 
 Germany, France, Latvia, and Poland show NULL values for several expenditure categories in the most recent year — this reflects incomplete Eurostat reporting at COFOG level, not zero spending.
 
-| Country | Region | Debt | Deficit | Defence | Econ. Affairs | Education | Health | Housing | Social Prot. |
-|---|---|---|---|---|---|---|---|---|---|
-| Austria | Central Europe | 79.9 | -4.7 | 0.7 | 7.1 | 5.3 | 9.5 | 0.4 | 22.8 |
-| Belgium | Western Europe | 103.9 | -4.4 | 1.3 | 6.4 | 6.3 | 8.0 | 0.4 | 20.4 |
-| Czechia | Central Europe | 43.3 | -2.0 | 1.3 | 5.5 | 4.5 | 9.0 | 0.9 | 13.2 |
-| Denmark | Northern Europe | 30.5 | 4.5 | 1.8 | 3.1 | 5.6 | 8.3 | 0.3 | 19.6 |
-| Estonia | Northern Europe | 23.5 | -1.7 | 3.7 | 4.6 | 6.3 | 6.3 | 0.4 | 13.8 |
-| Finland | Northern Europe | 82.5 | -4.4 | 1.5 | 4.9 | 6.3 | 7.7 | 0.5 | 26.5 |
-| Greece | Southern Europe | 154.2 | 1.2 | 2.2 | 6.0 | 3.9 | 5.7 | 0.5 | 17.7 |
-| Hungary | Central Europe | 73.5 | -5.0 | 2.0 | 7.7 | 4.9 | 4.7 | 1.0 | 12.3 |
-| Italy | Southern Europe | 134.9 | -3.4 | 1.3 | 5.1 | 4.0 | 6.6 | 0.8 | 21.3 |
-| Lithuania | Northern Europe | 38.0 | -1.3 | 2.6 | 3.2 | 5.5 | 5.8 | 0.8 | 14.7 |
-| Luxembourg | Western Europe | 26.3 | 0.9 | 0.7 | 5.9 | 5.0 | 5.6 | 0.6 | 19.9 |
-| Malta | Southern Europe | 46.2 | -3.5 | 0.5 | 7.6 | 4.7 | 5.0 | 0.6 | 9.8 |
-| Netherlands | Western Europe | 43.7 | -0.9 | 1.6 | 4.4 | 5.1 | 7.3 | 0.6 | 16.6 |
-| Norway | Northern Europe | — | — | 2.1 | 5.7 | 4.7 | 7.2 | 0.9 | 18.5 |
-| Portugal | Southern Europe | 93.6 | 0.5 | 0.9 | 3.7 | 4.3 | 6.8 | 0.6 | 17.1 |
-| Slovakia | Central Europe | 59.7 | -5.5 | — | — | — | — | — | — |
-| Slovenia | Central Europe | 66.6 | -0.9 | 1.4 | 5.7 | 5.5 | 8.0 | 0.4 | 17.1 |
-| Spain | Southern Europe | 101.6 | -3.2 | 0.9 | 5.1 | 4.1 | 6.5 | 0.5 | 18.7 |
-| Sweden | Northern Europe | 34.0 | -1.6 | 2.2 | 4.8 | 7.2 | 7.4 | 0.8 | 19.1 |
-| Switzerland | Central Europe | — | — | 0.8 | 3.8 | 5.3 | 2.2 | 0.2 | 12.7 |
+| Country | Debt | Deficit | Defence | Econ. Affairs | Education | Health | Housing | Social Prot. |
+|---|---|---|---|---|---|---|---|---|
+| Austria | 79.9 | -4.7 | 0.7 | 7.1 | 5.3 | 9.5 | 0.4 | 22.8 |
+| Belgium | 103.9 | -4.4 | 1.3 | 6.4 | 6.3 | 8.0 | 0.4 | 20.4 |
+| Czechia | 43.3 | -2.0 | 1.3 | 5.5 | 4.5 | 9.0 | 0.9 | 13.2 |
+| Denmark | 30.5 | 4.5 | 1.8 | 3.1 | 5.6 | 8.3 | 0.3 | 19.6 |
+| Estonia | 23.5 | -1.7 | 3.7 | 4.6 | 6.3 | 6.3 | 0.4 | 13.8 |
+| Finland | 82.5 | -4.4 | 1.5 | 4.9 | 6.3 | 7.7 | 0.5 | 26.5 |
+| Greece | 154.2 | 1.2 | 2.2 | 6.0 | 3.9 | 5.7 | 0.5 | 17.7 |
+| Hungary | 73.5 | -5.0 | 2.0 | 7.7 | 4.9 | 4.7 | 1.0 | 12.3 |
+| Italy | 134.9 | -3.4 | 1.3 | 5.1 | 4.0 | 6.6 | 0.8 | 21.3 |
+| Lithuania | 38.0 | -1.3 | 2.6 | 3.2 | 5.5 | 5.8 | 0.8 | 14.7 |
+| Luxembourg | 26.3 | 0.9 | 0.7 | 5.9 | 5.0 | 5.6 | 0.6 | 19.9 |
+| Malta | 46.2 | -3.5 | 0.5 | 7.6 | 4.7 | 5.0 | 0.6 | 9.8 |
+| Netherlands | 43.7 | -0.9 | 1.6 | 4.4 | 5.1 | 7.3 | 0.6 | 16.6 |
+| Norway | — | — | 2.1 | 5.7 | 4.7 | 7.2 | 0.9 | 18.5 |
+| Portugal | 93.6 | 0.5 | 0.9 | 3.7 | 4.3 | 6.8 | 0.6 | 17.1 |
+| Slovakia | 59.7 | -5.5 | — | — | — | — | — | — |
+| Slovenia | 66.6 | -0.9 | 1.4 | 5.7 | 5.5 | 8.0 | 0.4 | 17.1 |
+| Spain | 101.6 | -3.2 | 0.9 | 5.1 | 4.1 | 6.5 | 0.5 | 18.7 |
+| Sweden | 34.0 | -1.6 | 2.2 | 4.8 | 7.2 | 7.4 | 0.8 | 19.1 |
+| Switzerland | — | — | 0.8 | 3.8 | 5.3 | 2.2 | 0.2 | 12.7 |
 
 ![Expenditure Dashboard](docs/images/dashboard_expenditure.png)
 
