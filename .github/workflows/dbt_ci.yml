@@ -42,22 +42,26 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
           mkdir -p ~/.dbt
-          cat > ~/.dbt/profiles.yml << 'EOF'
-          eurostat_fiscal:
+          python - << 'EOF'
+          import os
+          content = f"""eurostat_fiscal:
             target: dev
             outputs:
               dev:
                 type: sqlserver
                 driver: 'ODBC Driver 18 for SQL Server'
-                server: ${DB_SERVER}
+                server: {os.environ['DB_SERVER']}
                 port: 1433
-                database: ${DB_NAME}
+                database: {os.environ['DB_NAME']}
                 schema: dbo
-                user: ${DB_USER}
-                password: ${DB_PASSWORD}
+                user: {os.environ['DB_USER']}
+                password: {os.environ['DB_PASSWORD']}
                 encrypt: true
                 trust_cert: true
                 threads: 4
+          """
+          with open(os.path.expanduser('~/.dbt/profiles.yml'), 'w') as f:
+              f.write(content)
           EOF
 
       - name: dbt run
