@@ -42,9 +42,9 @@ DATASETS = [
 
 BASE_URL    = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data"
 START_YEAR  = "2000"
-MAX_WORKERS = 5          # Requests paralelas para datasets por país
-API_TIMEOUT = 60         # Segundos por request
-INDICATOR_TIMEOUT = 600  # Segundos máximos por indicador completo
+MAX_WORKERS = 5
+API_TIMEOUT = 60
+INDICATOR_TIMEOUT = 600
 
 # ── Log acumulado de la ejecución ────────────────────────────
 run_log = []
@@ -77,7 +77,7 @@ def conectar(max_intentos=5):
                 conn.execute(text("SELECT 1"))
             return engine
         except Exception as e:
-            espera = 2 ** intento  # 1s, 2s, 4s, 8s, 16s
+            espera = 2 ** intento
             log(f"  Conexión fallida (intento {intento + 1}/{max_intentos}): {e}")
             if intento < max_intentos - 1:
                 log(f"  Reintentando en {espera}s...")
@@ -87,9 +87,9 @@ def conectar(max_intentos=5):
 # ── Crear tablas si no existen ───────────────────────────────
 CREATE_BRONZE = """
 IF NOT EXISTS (
-    SELECT 1 
+    SELECT 1
     FROM INFORMATION_SCHEMA.TABLES
-    WHERE TABLE_SCHEMA = 'eurostat' 
+    WHERE TABLE_SCHEMA = 'eurostat'
       AND TABLE_NAME   = 'bronze_raw'
 )
 CREATE TABLE eurostat.bronze_raw (
@@ -105,15 +105,16 @@ CREATE TABLE eurostat.bronze_raw (
     ,sector      NVARCHAR(50)   NULL
     ,cofog       NVARCHAR(50)   NULL
     ,sex         NVARCHAR(10)   NULL
+    ,age         NVARCHAR(20)   NULL
     ,loaded_at   DATETIME       DEFAULT GETDATE()
 )
 """
 
 CREATE_LOG = """
 IF NOT EXISTS (
-    SELECT 1 
+    SELECT 1
     FROM INFORMATION_SCHEMA.TABLES
-    WHERE TABLE_SCHEMA = 'eurostat' 
+    WHERE TABLE_SCHEMA = 'eurostat'
       AND TABLE_NAME   = 'update_log'
 )
 CREATE TABLE eurostat.update_log (
@@ -125,7 +126,7 @@ CREATE TABLE eurostat.update_log (
     ,rows_after     INT            NOT NULL
     ,period_from    NVARCHAR(20)   NULL
     ,period_to      NVARCHAR(20)   NULL
-    ,status         NVARCHAR(20)   NOT NULL  -- 'ok' | 'error' | 'no_new_data'
+    ,status         NVARCHAR(20)   NOT NULL
     ,error_msg      NVARCHAR(500)  NULL
 )
 """
@@ -144,7 +145,7 @@ def fetch_api(url, params, max_intentos=4):
             return r.json()
         except requests.exceptions.HTTPError as e:
             if e.response.status_code in (400, 404):
-                raise  # No reintentar errores de cliente
+                raise
             espera = 2 ** intento
             log(f"    HTTP {e.response.status_code} — reintentando en {espera}s...")
             time.sleep(espera)
@@ -202,7 +203,6 @@ def extraer_registros(data, code, name, pais, f_unit, f_sector, f_na_item, f_cof
         if not pais and geo_code not in SCHENGEN_COUNTRIES:
             continue
 
-        # Filtros por dimensión
         if f_unit    and coords.get("unit")    != f_unit:    continue
         if f_sector  and coords.get("sector")  != f_sector:  continue
         if f_na_item and coords.get("na_item") != f_na_item: continue
@@ -229,6 +229,7 @@ def extraer_registros(data, code, name, pais, f_unit, f_sector, f_na_item, f_cof
             "sector"     : coords.get("sector"),
             "cofog"      : f_cofog,
             "sex"        : f_sex,
+            "age"        : coords.get("age") if code == "une_rt_a" else None,
         })
 
     return registros
@@ -249,17 +250,20 @@ def fetch_pais(pais, code, name, f_unit, f_sector, f_na_item, f_cofog, f_sex):
 
 # ── Insertar solo filas nuevas ───────────────────────────────
 def insertar_nuevas(df_nuevo, name, engine):
+    is_labor = name.startswith("unemployment")
+
     # Obtener claves existentes
+    if is_labor:
+        query = f"SELECT geo, time_period, sex, age FROM eurostat.bronze_raw WHERE indicator = '{name}'"
+    else:
+        query = f"SELECT geo, time_period FROM eurostat.bronze_raw WHERE indicator = '{name}'"
+
     with engine.connect() as conn:
-        existentes = pd.read_sql(
-            text(f"SELECT geo, time_period FROM eurostat.bronze_raw WHERE indicator = '{name}'"),
-            conn
-        )
+        existentes = pd.read_sql(text(query), conn)
 
     rows_before = len(existentes)
 
     if rows_before > 0:
-        # Obtener período actual antes de insertar
         with engine.connect() as conn:
             periodo = conn.execute(text(
                 f"SELECT MIN(time_period), MAX(time_period) FROM eurostat.bronze_raw WHERE indicator = '{name}'"
@@ -272,10 +276,21 @@ def insertar_nuevas(df_nuevo, name, engine):
 
     # Identificar filas nuevas
     if rows_before > 0:
-        key_existentes = set(zip(existentes["geo"], existentes["time_period"]))
-        mask = df_nuevo.apply(
-            lambda r: (r["geo"], r["time_period"]) not in key_existentes, axis=1
-        )
+        if is_labor:
+            key_existentes = set(zip(
+                existentes["geo"],
+                existentes["time_period"],
+                existentes["sex"],
+                existentes["age"]
+            ))
+            mask = df_nuevo.apply(
+                lambda r: (r["geo"], r["time_period"], r["sex"], r["age"]) not in key_existentes, axis=1
+            )
+        else:
+            key_existentes = set(zip(existentes["geo"], existentes["time_period"]))
+            mask = df_nuevo.apply(
+                lambda r: (r["geo"], r["time_period"]) not in key_existentes, axis=1
+            )
         df_insertar = df_nuevo[mask].copy()
     else:
         df_insertar = df_nuevo.copy()
@@ -293,15 +308,14 @@ def insertar_nuevas(df_nuevo, name, engine):
             chunksize = 500
         )
 
-    # Obtener período después de insertar
     with engine.connect() as conn:
         periodo_new = conn.execute(text(
             f"SELECT MIN(time_period), MAX(time_period), COUNT(*) FROM eurostat.bronze_raw WHERE indicator = '{name}'"
         )).fetchone()
 
-    rows_after    = periodo_new[2]
-    period_from   = periodo_new[0]
-    period_to     = periodo_new[1]
+    rows_after  = periodo_new[2]
+    period_from = periodo_new[0]
+    period_to   = periodo_new[1]
 
     return rows_before, rows_inserted, rows_after, period_from, period_to
 
@@ -345,7 +359,6 @@ def update_indicator(dataset_config, engine):
     start_ts = time.time()
 
     try:
-        # ── Datasets que requieren request por país ──────────
         if code in ("gov_10a_exp", "prc_hicp_ainr"):
             todos_registros = []
             errores_pais    = []
@@ -378,7 +391,6 @@ def update_indicator(dataset_config, engine):
             df_nuevo = pd.DataFrame(todos_registros)
             df_nuevo = df_nuevo[df_nuevo["time_period"].notna()]
 
-        # ── Caso general: request única ──────────────────────
         else:
             params = {
                 "format"          : "JSON",
@@ -398,7 +410,6 @@ def update_indicator(dataset_config, engine):
 
             df_nuevo = pd.DataFrame(registros)
 
-        # ── Insertar solo filas nuevas ───────────────────────
         rows_before, rows_inserted, rows_after, period_from, period_to = \
             insertar_nuevas(df_nuevo, name, engine)
 
@@ -427,22 +438,17 @@ if __name__ == "__main__":
     run_start = datetime.now(timezone.utc)
     log(f"Iniciando actualización Eurostat — {run_start.strftime('%Y-%m-%d %H:%M:%S UTC')}")
 
-    # Conectar con reintento
     engine = conectar()
 
-    # Crear tablas si no existen
     with engine.connect() as conn:
         conn.execute(text(CREATE_BRONZE))
         conn.execute(text(CREATE_LOG))
         conn.commit()
     log("Tablas verificadas")
 
-    # Actualizar cada indicador
-    total_insertadas = 0
     for ds in DATASETS:
         update_indicator(ds, engine)
 
-    # Resumen final
     run_end = datetime.now(timezone.utc)
     elapsed_total = round((run_end - run_start).total_seconds(), 1)
 
@@ -450,7 +456,6 @@ if __name__ == "__main__":
     log(f"Actualización completada | Tiempo total: {elapsed_total}s")
     log(f"{'='*60}")
 
-    # Imprimir resumen desde update_log
     with engine.connect() as conn:
         resumen = pd.read_sql(text("""
             SELECT

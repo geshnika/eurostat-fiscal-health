@@ -25,19 +25,19 @@ SCHENGEN_COUNTRIES = [
 
 # ── Datasets a ingestar ──────────────────────────────────────
 DATASETS = [
-    {"code": "gov_10dd_edpt1", "name": "government_debt",                  "unit": "PC_GDP",  "sector": "S13", "na_item": "GD",   "cofog": None,    "sex": None},
-    {"code": "gov_10dd_edpt1", "name": "government_deficit",               "unit": "PC_GDP",  "sector": "S13", "na_item": "B9",   "cofog": None,    "sex": None},
-    {"code": "gov_10a_exp",    "name": "government_expenditure_total",     "unit": "PC_GDP",  "sector": "S13", "na_item": None,   "cofog": "TOTAL", "sex": None},
-    {"code": "gov_10a_exp",    "name": "government_expenditure_defence",   "unit": "PC_GDP",  "sector": "S13", "na_item": None,   "cofog": "GF02",  "sex": None},
-    {"code": "gov_10a_exp",    "name": "government_expenditure_economic",  "unit": "PC_GDP",  "sector": "S13", "na_item": None,   "cofog": "GF04",  "sex": None},
-    {"code": "gov_10a_exp",    "name": "government_expenditure_housing",   "unit": "PC_GDP",  "sector": "S13", "na_item": None,   "cofog": "GF06",  "sex": None},
-    {"code": "gov_10a_exp",    "name": "government_expenditure_health",    "unit": "PC_GDP",  "sector": "S13", "na_item": None,   "cofog": "GF07",  "sex": None},
-    {"code": "gov_10a_exp",    "name": "government_expenditure_education", "unit": "PC_GDP",  "sector": "S13", "na_item": None,   "cofog": "GF09",  "sex": None},
-    {"code": "gov_10a_exp",    "name": "government_expenditure_social",    "unit": "PC_GDP",  "sector": "S13", "na_item": None,   "cofog": "GF10",  "sex": None},
-    {"code": "prc_hicp_ainr",  "name": "inflation_hicp",                   "unit": "RCH_A_AVG","sector": None, "na_item": None,   "cofog": None,    "sex": None},
-    {"code": "irt_lt_mcby_a",  "name": "interest_rates_lt",                "unit": None,      "sector": None,  "na_item": None,   "cofog": None,    "sex": None},
-    {"code": "une_rt_a",       "name": "unemployment_male",                "unit": "PC_ACT",  "sector": None,  "na_item": None,   "cofog": None,    "sex": "M"},
-    {"code": "une_rt_a",       "name": "unemployment_female",              "unit": "PC_ACT",  "sector": None,  "na_item": None,   "cofog": None,    "sex": "F"},
+    {"code": "gov_10dd_edpt1", "name": "government_debt",                  "unit": "PC_GDP",   "sector": "S13", "na_item": "GD",   "cofog": None,    "sex": None},
+    {"code": "gov_10dd_edpt1", "name": "government_deficit",               "unit": "PC_GDP",   "sector": "S13", "na_item": "B9",   "cofog": None,    "sex": None},
+    {"code": "gov_10a_exp",    "name": "government_expenditure_total",     "unit": "PC_GDP",   "sector": "S13", "na_item": None,   "cofog": "TOTAL", "sex": None},
+    {"code": "gov_10a_exp",    "name": "government_expenditure_defence",   "unit": "PC_GDP",   "sector": "S13", "na_item": None,   "cofog": "GF02",  "sex": None},
+    {"code": "gov_10a_exp",    "name": "government_expenditure_economic",  "unit": "PC_GDP",   "sector": "S13", "na_item": None,   "cofog": "GF04",  "sex": None},
+    {"code": "gov_10a_exp",    "name": "government_expenditure_housing",   "unit": "PC_GDP",   "sector": "S13", "na_item": None,   "cofog": "GF06",  "sex": None},
+    {"code": "gov_10a_exp",    "name": "government_expenditure_health",    "unit": "PC_GDP",   "sector": "S13", "na_item": None,   "cofog": "GF07",  "sex": None},
+    {"code": "gov_10a_exp",    "name": "government_expenditure_education", "unit": "PC_GDP",   "sector": "S13", "na_item": None,   "cofog": "GF09",  "sex": None},
+    {"code": "gov_10a_exp",    "name": "government_expenditure_social",    "unit": "PC_GDP",   "sector": "S13", "na_item": None,   "cofog": "GF10",  "sex": None},
+    {"code": "prc_hicp_ainr",  "name": "inflation_hicp",                   "unit": "RCH_A_AVG","sector": None,  "na_item": None,   "cofog": None,    "sex": None},
+    {"code": "irt_lt_mcby_a",  "name": "interest_rates_lt",                "unit": None,       "sector": None,  "na_item": None,   "cofog": None,    "sex": None},
+    {"code": "une_rt_a",       "name": "unemployment_male",                "unit": "PC_ACT",   "sector": None,  "na_item": None,   "cofog": None,    "sex": "M"},
+    {"code": "une_rt_a",       "name": "unemployment_female",              "unit": "PC_ACT",   "sector": None,  "na_item": None,   "cofog": None,    "sex": "F"},
 ]
 
 BASE_URL   = "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data"
@@ -76,6 +76,7 @@ CREATE TABLE eurostat.bronze_raw (
     ,sector      NVARCHAR(50)      NULL
     ,cofog       NVARCHAR(50)      NULL
     ,sex         NVARCHAR(10)      NULL
+    ,age         NVARCHAR(20)      NULL
     ,loaded_at   DATETIME          DEFAULT GETDATE()
 )
 """
@@ -186,10 +187,9 @@ def extract_dataset(dataset_config):
                     rem              = rem %  strides[i]
                     coords[dim_name] = dim_maps[dim_name].get(coord)
 
-                # Filtros específicos por dataset
                 if code == "gov_10a_exp":
-                    if f_unit   and coords.get("unit")   != f_unit:    continue
-                    if f_sector and coords.get("sector") != f_sector:  continue
+                    if f_unit   and coords.get("unit")   != f_unit:   continue
+                    if f_sector and coords.get("sector") != f_sector: continue
 
                 if code == "prc_hicp_ainr":
                     if coords.get("coicop18") != "TOTAL":              continue
@@ -209,6 +209,7 @@ def extract_dataset(dataset_config):
                     "sector"     : coords.get("sector"),
                     "cofog"      : f_cofog,
                     "sex"        : None,
+                    "age"        : None,
                 })
 
             print(f"  {pais}: {len(values)} valores")
@@ -285,6 +286,7 @@ def extract_dataset(dataset_config):
             "sector"     : coords.get("sector"),
             "cofog"      : f_cofog,
             "sex"        : f_sex,
+            "age"        : coords.get("age") if code == "une_rt_a" else None,
         })
 
     if not registros:

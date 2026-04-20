@@ -25,4 +25,5 @@ FROM (
 	FROM eurostat.silver_fiscal
 	WHERE Indicator = 'Deficit'
 	) AS F
+	
 GROUP BY CountryName

@@ -14,6 +14,7 @@ SELECT
         WHEN 'M' THEN 'Male'
         WHEN 'F' THEN 'Female'
      END AS Sex
+    ,B.age AS AgeGroup
     ,CAST(B.value AS FLOAT) AS Value
     ,'% of active population' AS Unit
 

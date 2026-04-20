@@ -47,7 +47,7 @@ WITH
 	GROUP BY F.CountryCode
 ),
 
-  Labor AS (
+  Labor AS ( -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - Gender gap <<<
 	SELECT
 		 L.CountryCode
 		,MAX(IIF(Year = LastYear AND Sex = 'Male', Value, NULL)) AS LY_MaleValue
@@ -63,6 +63,7 @@ WITH
 		GROUP BY CountryCode
 		) AS LY ON LY.CountryCode = L.CountryCode
 	WHERE L.Year >= YEAR(GETDATE()) - 10
+	  AND AgeGroup = 'Y15-74'
 	GROUP BY L.CountryCode
 )
 
@@ -91,8 +92,10 @@ SELECT
 
 	,LY_MaleValue -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - Labor >>>
 	,LY_FemaleValue
+	,ROUND(LY_FemaleValue - LY_MaleValue, 2) AS LY_GenderGap
 	,AVG_MaleValue
 	,AVG_FemaleValue
+	,ROUND(AVG_FemaleValue - AVG_MaleValue, 2) AS AVG_GenderGap
 
 FROM eurostat.dim_country AS C
 
