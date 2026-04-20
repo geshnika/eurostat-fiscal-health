@@ -146,6 +146,6 @@ See [RESULTS.md](RESULTS.md) for findings and answers to the research questions 
 
 ## Author
 
-**Juan Pablo Riesgo**
-Data Analyst | Madrid, Spain
+**Juan Pablo Riesgo**  
+Data Analyst | Madrid, Spain  
 [LinkedIn](https://www.linkedin.com/in/riesgo-juan-pablo/)
