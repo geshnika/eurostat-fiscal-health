@@ -141,3 +141,11 @@ eurostat-fiscal-health/
 ## Results
 
 See [RESULTS.md](RESULTS.md) for findings and answers to the research questions above.
+
+---
+
+## Author
+
+**Juan Pablo Riesgo**
+Data Analyst | Madrid, Spain
+[LinkedIn](https://www.linkedin.com/in/riesgo-juan-pablo/)

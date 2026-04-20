@@ -227,8 +227,8 @@ The gender gap shows a clear geographic pattern. Southern European countries sho
 
 ## Author
 
-**Juan Pablo Riesgo** — Data Analyst | Madrid, Spain
-
+**Juan Pablo Riesgo**
+Data Analyst | Madrid, Spain
 [LinkedIn](https://www.linkedin.com/in/riesgo-juan-pablo/)
 
 ---
