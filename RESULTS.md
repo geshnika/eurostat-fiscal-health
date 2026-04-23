@@ -6,6 +6,8 @@ Data covers 25 Schengen Area countries from 2000 to the most recent available ye
 
 > **Note:** Switzerland, Norway, and Iceland are Schengen members but not EU members. Eurostat coverage for government debt, deficit, and some expenditure categories is limited or unavailable for these countries. NULL values reflect missing source data, not zero values.
 
+![Resume Dashboard](docs/images/dashboard_resume.png)
+
 ---
 
 ## 1. How has public debt evolved across the Schengen Area?
@@ -41,7 +43,8 @@ The 2020s decade shows a mixed picture: most countries stabilized or slightly re
 | Spain | 101.6 | 46.59 | 92.7 | 110.22 | 2007 | 35.7 | 2020 | 119.3 |
 | Sweden | 34.0 | 46.19 | 40.8 | 35.54 | 2023 | 32.0 | 2001 | 52.0 |
 
-![Debt Dashboard](docs/images/dashboard_debt.png)
+
+![Fiscal Dashboard](docs/images/dashboard_fiscal.png)
 
 ---
 
@@ -78,7 +81,6 @@ France and Italy consolidated less aggressively and entered the COVID shock with
 | Spain | -3.2 | -1.31 | -6.25 | -5.54 | 2006 | 2.1 | 2012 | -11.5 |
 | Sweden | -1.6 | 1.06 | -0.24 | -0.98 | 2007 | 3.4 | 2020 | -3.2 |
 
-![Deficit Dashboard](docs/images/dashboard_deficit.png)
 
 ---
 
@@ -113,7 +115,6 @@ Germany, France, Latvia, and Poland show NULL values for several expenditure cat
 | Sweden | 34.0 | -1.6 | 2.2 | 4.8 | 7.2 | 7.4 | 0.8 | 19.1 |
 | Switzerland | — | — | 0.8 | 3.8 | 5.3 | 2.2 | 0.2 | 12.7 |
 
-![Expenditure Dashboard](docs/images/dashboard_expenditure.png)
 
 ---
 
@@ -127,7 +128,8 @@ Central Europe (Czechia, Hungary, Slovakia, Poland) entered the period with lowe
 
 Western Europe (France, Belgium, Netherlands, Luxembourg) presents a mixed picture — Belgium and France carry structural debt above 100% GDP, while the Netherlands and Luxembourg maintain much healthier positions.
 
-![Regional Dashboard](docs/images/dashboard_regional.png)
+
+![Monetary Dashboard](docs/images/dashboard_monetary.png)
 
 ---
 
@@ -169,7 +171,6 @@ Long-term interest rates converged significantly after 2010 within the eurozone,
 | Sweden | 2.6 | 1.84 | 19.97 | 1.22 | 12.87 | 3.67 | 23.9 | 2014 | 0.2 | 2022 | 8.1 |
 | Switzerland | 0.1 | 0.83 | 2.5 | 0.07 | 0.69 | 0.98 | 6.0 | 2020 | -0.8 | 2022 | 2.7 |
 
-![Inflation Dashboard](docs/images/dashboard_inflation.png)
 
 ---
 
@@ -181,7 +182,6 @@ Non-eurozone countries split into two groups. Switzerland and Norway maintained 
 
 Long-term interest rates confirm the eurozone convergence story: eurozone members averaged 1.0–1.3% during the 2010s, while Hungary (4.54%) and Poland (3.84%) maintained significantly higher rates reflecting currency and fiscal risk premiums.
 
-![Monetary Dashboard](docs/images/dashboard_monetary.png)
 
 ---
 
@@ -220,6 +220,7 @@ The gender gap shows a clear geographic pattern. Southern European countries sho
 | Spain | 9.3 | 2025 | 9.3 | 2013 | 25.6 | 11.9 | 2025 | 11.9 | 2013 | 26.7 | 2.36 |
 | Sweden | 8.9 | 2007 | 5.9 | 2025 | 8.9 | 8.8 | 2018 | 6.4 | 2021 | 9.2 | 0.05 |
 | Switzerland | 4.9 | 2023 | 3.9 | 2021 | 4.9 | 4.9 | 2023 | 4.3 | 2021 | 5.3 | 0.41 |
+
 
 ![Labor Dashboard](docs/images/dashboard_labor.png)
 
