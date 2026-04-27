@@ -39,3 +39,18 @@ jobs:
           DB_NAME:     ${{ secrets.DB_NAME }}
           DB_USER:     ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Update RESULTS.md date
+        run: |
+          DATE=$(date +'%B %d, %Y')
+          sed -i "s/<!-- LAST_UPDATED -->/$DATE/" RESULTS.md
+
+      - name: Commit updated RESULTS.md
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset --soft origin/main
+          git add RESULTS.md
+          git diff --staged --quiet || git commit -m "docs: update last updated date in RESULTS.md"
+          git push origin main
