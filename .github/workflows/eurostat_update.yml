@@ -2,7 +2,7 @@ name: Monthly Eurostat Update
 
 on:
   schedule:
-    - cron: '0 7 1 * *'     # Día 1 de cada mes a las 07:00 UTC
+    - cron: '0 7 1 * *'   # Día 1 de cada mes a las 07:00 UTC
   workflow_dispatch:        # Permite ejecución manual
 
 jobs:
@@ -43,7 +43,7 @@ jobs:
       - name: Update RESULTS.md date
         run: |
           DATE=$(date +'%B %d, %Y')
-          sed -i "s/<!-- LAST_UPDATED -->/$DATE/" RESULTS.md
+          sed -i "s/Last updated: .*/Last updated: $DATE. Data source: [Eurostat](https:\/\/ec.europa.eu\/eurostat\/web\/main\/data\/web-services)./" RESULTS.md
 
       - name: Commit updated RESULTS.md
         run: |
