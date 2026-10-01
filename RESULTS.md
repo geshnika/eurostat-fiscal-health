@@ -234,4 +234,4 @@ Data Analyst | Madrid, Spain
 
 ---
 
-*Last updated: September 01, 2026. Data source: [Eurostat](https://ec.europa.eu/eurostat/web/main/data/web-services).
+*Last updated: October 01, 2026. Data source: [Eurostat](https://ec.europa.eu/eurostat/web/main/data/web-services).
